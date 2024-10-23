@@ -33,7 +33,6 @@ def agregar_habitacion(habitacion_id, hotel_id, tipo, amenities):
         "hotel_id": hotel_id,
         "tipo": tipo,
         "amenities": amenities,
-        "reservas": []
     })
 
 def obtener_habitaciones():
