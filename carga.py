@@ -197,7 +197,7 @@ db.huespedes.insert_many(huespedes_data)
 reservas_data = [
     {
         "reserva_id": "RS1",
-        "huesped_id": "G1",
+        "huesped_id": ["G1"],
         "habitacion_id": "R1",
         "codigo_reserva": "C1",
         "fecha_inicio": "2024-11-01",
@@ -206,7 +206,7 @@ reservas_data = [
     },
     {
         "reserva_id": "RS2",
-        "huesped_id": "G2",
+        "huesped_id": ["G2"],
         "habitacion_id": "R3",
         "codigo_reserva": "C2",
         "fecha_inicio": "2024-11-10",
@@ -215,7 +215,7 @@ reservas_data = [
     },
     {
         "reserva_id": "RS3",
-        "huesped_id": "G3",
+        "huesped_id": ["G3"],
         "habitacion_id": "R5",
         "codigo_reserva": "C3",
         "fecha_inicio": "2024-11-15",
@@ -224,7 +224,7 @@ reservas_data = [
     },
     {
         "reserva_id": "RS4",
-        "huesped_id": "G4",
+        "huesped_id": ["G4"],
         "habitacion_id": "R2",
         "codigo_reserva": "C4",
         "fecha_inicio": "2024-11-25",
@@ -233,7 +233,7 @@ reservas_data = [
     },
     {
         "reserva_id": "RS5",
-        "huesped_id": "G5",
+        "huesped_id": ["G5"],
         "habitacion_id": "R4",
         "codigo_reserva": "C5",
         "fecha_inicio": "2024-11-28",

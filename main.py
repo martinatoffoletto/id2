@@ -64,7 +64,7 @@ def obtener_huespedes():
 def agregar_reserva(reserva_id, huesped_id, habitacion_id, codigo_reserva, fecha_inicio, fecha_salida, tarifa):
     db.reservas.insert_one({
         "reserva_id": reserva_id,
-        "huesped_id": huesped_id,
+        "huesped_id": huesped_id, # es una lista de huespedes
         "habitacion_id": habitacion_id,
         "codigo_reserva": codigo_reserva,
         "fecha_inicio": fecha_inicio,
