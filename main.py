@@ -5,9 +5,8 @@ client = MongoClient("mongodb://localhost:27017/")
 db = client["hotel_management"]
 
 
-def agregar_hotel(hotel_id, nombre, direccion, telefonos, email, puntos_de_interes):
+def agregar_hotel(nombre, direccion, telefonos, email, puntos_de_interes):
     db.hoteles.insert_one({
-        "hotel_id": hotel_id,
         "nombre": nombre,
         "dirección": direccion,
         "teléfono": telefonos,
@@ -27,9 +26,8 @@ def eliminar_hotel(hotel_id):
     db.hoteles.delete_one({"hotel_id": hotel_id})
 
 
-def agregar_habitacion(habitacion_id, hotel_id, tipo, amenities):
+def agregar_habitacion(hotel_id, tipo, amenities):
     db.habitaciones.insert_one({
-        "habitacion_id": habitacion_id,
         "hotel_id": hotel_id,
         "tipo": tipo,
         "amenities": amenities,
@@ -45,9 +43,8 @@ def eliminar_habitacion(habitacion_id):
     db.habitaciones.delete_one({"habitacion_id": habitacion_id})
 
 
-def agregar_huesped(huesped_id, nombre, apellido, telefonos, emails, direccion):
+def agregar_huesped( nombre, apellido, telefonos, emails, direccion):
     db.huespedes.insert_one({
-        "huesped_id": huesped_id,
         "nombre": nombre,
         "apellido": apellido,
         "teléfonos": telefonos,
@@ -61,9 +58,8 @@ def obtener_huespedes():
 
 
 
-def agregar_reserva(reserva_id, huesped_id, habitacion_id, codigo_reserva, fecha_inicio, fecha_salida, tarifa):
+def agregar_reserva( huesped_id, habitacion_id, codigo_reserva, fecha_inicio, fecha_salida, tarifa):
     db.reservas.insert_one({
-        "reserva_id": reserva_id,
         "huesped_id": huesped_id, # es una lista de huespedes
         "habitacion_id": habitacion_id,
         "codigo_reserva": codigo_reserva,
