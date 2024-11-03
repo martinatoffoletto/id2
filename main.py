@@ -20,27 +20,44 @@ def obtener_hoteles():
 
 
 def modificar_hotel(hotel_id, updates):
-    db.hoteles.update_one({"hotel_id": hotel_id}, {"$set": updates})
+    db.hoteles.update_one({"_id": hotel_id}, {"$set": updates})
 
 def eliminar_hotel(hotel_id):
-    db.hoteles.delete_one({"hotel_id": hotel_id})
+    db.habitaciones.delete_many({"hotel_id": hotel_id})
+    db.hoteles.delete_one({"_id": hotel_id})
 
 
 def agregar_habitacion(hotel_id, tipo, amenities):
-    db.habitaciones.insert_one({
+    result = db.habitaciones.insert_one({
         "hotel_id": hotel_id,
         "tipo": tipo,
         "amenities": amenities,
     })
+    
+    habitacion_id = result.inserted_id
+    
+    db.hoteles.update_one(
+        {"_id": hotel_id},
+        {"$push": {"habitaciones": habitacion_id}}
+    )
 
 def obtener_habitaciones():
     return list(db.habitaciones.find())
 
 def modificar_habitacion(habitacion_id, updates):
-    db.habitaciones.update_one({"habitacion_id": habitacion_id}, {"$set": updates})
+    db.habitaciones.update_one({"_id": habitacion_id}, {"$set": updates})
 
 def eliminar_habitacion(habitacion_id):
-    db.habitaciones.delete_one({"habitacion_id": habitacion_id})
+    habitacion = db.habitaciones.find_one({"_id": habitacion_id})
+    if habitacion:
+        hotel_id = habitacion["hotel_id"]
+    
+        db.hoteles.update_one(
+            {"_id": hotel_id},
+            {"$pull": {"habitaciones": habitacion_id}}
+        )
+        
+        db.habitaciones.delete_one({"_id": habitacion_id})
 
 
 def agregar_huesped( nombre, apellido, telefonos, emails, direccion):
@@ -76,28 +93,32 @@ def buscar_hoteles_cerca_poi(poi):
     return list(db.hoteles.find({"puntos_de_interés": poi}))
 
 def obtener_info_hotel(hotel_id):
-    return db.hoteles.find_one({"hotel_id": hotel_id})
+    return db.hoteles.find_one({"_id": hotel_id})
 
 def encontrar_poi_cerca_hotel(hotel_id):
-    hotel = db.hoteles.find_one({"hotel_id": hotel_id})
+    hotel = db.hoteles.find_one({"_id": hotel_id})
     if hotel:
         return hotel["puntos_de_interés"]
 
 def buscar_habitacion_disponible(hotel_id, fecha_inicio, fecha_salida):
-    habitaciones = [h["habitacion_id"] for h in db.habitaciones.find({"hotel_id": hotel_id})]
+    habitaciones = list(db.habitaciones.find({"hotel_id": hotel_id}))
+    ids_habitaciones = [h["_id"] for h in habitaciones]
     reservadas = list(db.reservas.find({
-        "habitacion_id": {"$in": habitaciones},
+        "habitacion_id": {"$in": ids_habitaciones},
         "$or": [
-            {"fecha_inicio": {"$lt": fecha_salida, "$gte": fecha_inicio}},
-            {"fecha_salida": {"$gt": fecha_inicio, "$lte": fecha_salida}},
+            {"fecha_inicio": {"$lte": fecha_salida, "$gte": fecha_inicio}},
+            {"fecha_salida": {"$gte": fecha_inicio, "$lte": fecha_salida}},
         ]
     }))
 
-    return reservadas
+    ids_habitaciones_reservadas = {reserva["habitacion_id"] for reserva in reservadas}
+    habitaciones_disponibles = [habitacion for habitacion in habitaciones if habitacion["_id"] not in ids_habitaciones_reservadas]
+
+    return habitaciones_disponibles
 
 
 def obtener_amenities_habitacion(habitacion_id):
-    habitacion = db.habitaciones.find_one({"habitacion_id": habitacion_id})
+    habitacion = db.habitaciones.find_one({"_id": habitacion_id})
     return habitacion["amenities"] if habitacion else None
 
 def obtener_reserva_por_codigo(codigo_reserva):
@@ -110,4 +131,4 @@ def obtener_reservas_por_fecha(hotel_id, fecha):
     return list(db.reservas.find({"habitacion_id": {"$in": [h["habitacion_id"] for h in db.habitaciones.find({"hotel_id": hotel_id})]}, "fecha_inicio": fecha}))
 
 def ver_detalles_huesped(huesped_id):
-    return db.huespedes.find_one({"huesped_id": huesped_id})
+    return db.huespedes.find_one({"_id": huesped_id})

@@ -7,7 +7,7 @@ db = client['hotel_management']
 # Insertar datos en la colección Hotelescls
 hoteles_data = [
     {
-        "hotel_id": "H1",
+        "_id": "H1",
         "nombre": "Hotel Alvear",
         "dirección": "Avenida Alvear 1361, Recoleta",
         "teléfono": ["011 4808-2100"],
@@ -20,7 +20,7 @@ hoteles_data = [
         "habitaciones": ["R1", "R2"]
     },
     {
-        "hotel_id": "H2",
+        "_id": "H2",
         "nombre": "Hotel Faena",
         "dirección": "Martha Salotti 445, Puerto Madero",
         "teléfono": ["011 4010-9100"],
@@ -33,7 +33,7 @@ hoteles_data = [
         "habitaciones": ["R3", "R4"]
     },
     {
-        "hotel_id": "H3",
+        "_id": "H3",
         "nombre": "Sheraton Buenos Aires",
         "dirección": "Avenida Leandro N. Alem 1200, Microcentro",
         "teléfono": ["011 4318-9000"],
@@ -46,7 +46,7 @@ hoteles_data = [
         "habitaciones": ["R5", "R6"]
     },
     {
-        "hotel_id": "H4",
+        "_id": "H4",
         "nombre": "Palacio Duhau - Park Hyatt Buenos Aires",
         "dirección": "Av. Alvear 1661, Recoleta",
         "teléfono": ["011 5171-1234"],
@@ -59,7 +59,7 @@ hoteles_data = [
         "habitaciones": ["R7", "R8"]
     },
     {
-        "hotel_id": "H5",
+        "_id": "H5",
         "nombre": "Hotel Intercontinental",
         "dirección": "Moreno 809, Monserrat",
         "teléfono": ["011 5279-9200"],
@@ -79,31 +79,31 @@ db.hoteles.insert_many(hoteles_data)
 # Insertar datos en la colección Habitaciones
 habitaciones_data = [
     {
-        "habitacion_id": "R1",
+        "_id": "R1",
         "hotel_id": "H1",
         "tipo": "Suite Doble",
         "amenities": ["Wi-Fi gratuito", "Desayuno incluido", "Copa de vino de bienvenida"]
     },
     {
-        "habitacion_id": "R2",
+        "_id": "R2",
         "hotel_id": "H1",
         "tipo": "Habitación Ejecutiva",
         "amenities": ["Wi-Fi gratuito", "TV por cable", "Productos especiales de tocador"]
     },
     {
-        "habitacion_id": "R3",
+        "_id": "R3",
         "hotel_id": "H2",
         "tipo": "Habitación Doble Superior",
         "amenities": ["Wi-Fi gratuito", "Acceso al spa", "Chocolates de bienvenida"]
     },
     {
-        "habitacion_id": "R4",
+        "_id": "R4",
         "hotel_id": "H2",
         "tipo": "Suite",
         "amenities": ["Wi-Fi gratuito", "Desayuno incluido", "Copa de champán"]
     },
     {
-        "habitacion_id": "R5",
+        "_id": "R5",
         "hotel_id": "H3",
         "tipo": "Habitación Deluxe",
         "amenities": ["Wi-Fi gratuito", "Café de cortesía", "Minibar"]
@@ -115,7 +115,7 @@ db.habitaciones.insert_many(habitaciones_data)
 # Insertar datos en la colección Huéspedes
 huespedes_data = [
     {
-        "huesped_id": "G1",
+        "_id": "G1",
         "nombre": "Juan",
         "apellido": "Pérez",
         "teléfonos": ["011 1234-5678"],
@@ -130,7 +130,7 @@ huespedes_data = [
         "reservas": ["RS1"]
     },
     {
-        "huesped_id": "G2",
+        "_id": "G2",
         "nombre": "Ana",
         "apellido": "García",
         "teléfonos": ["011 9876-5432"],
@@ -145,7 +145,7 @@ huespedes_data = [
         "reservas": ["RS2"]
     },
     {
-        "huesped_id": "G3",
+        "_id": "G3",
         "nombre": "Pedro",
         "apellido": "López",
         "teléfonos": ["011 2345-6789"],
@@ -160,7 +160,7 @@ huespedes_data = [
         "reservas": ["RS3"]
     },
     {
-        "huesped_id": "G4",
+        "_id": "G4",
         "nombre": "María",
         "apellido": "Rodríguez",
         "teléfonos": ["011 3456-7890"],
@@ -175,7 +175,7 @@ huespedes_data = [
         "reservas": ["RS4"]
     },
     {
-        "huesped_id": "G5",
+        "_id": "G5",
         "nombre": "Lucía",
         "apellido": "Martínez",
         "teléfonos": ["011 4567-8901"],
@@ -196,7 +196,7 @@ db.huespedes.insert_many(huespedes_data)
 # Insertar datos en la colección Reservas
 reservas_data = [
     {
-        "reserva_id": "RS1",
+        "_id": "RS1",
         "huesped_id": ["G1"],
         "habitacion_id": "R1",
         "codigo_reserva": "C1",
@@ -205,7 +205,7 @@ reservas_data = [
         "tarifa": "$200"
     },
     {
-        "reserva_id": "RS2",
+        "_id": "RS2",
         "huesped_id": ["G2"],
         "habitacion_id": "R3",
         "codigo_reserva": "C2",
@@ -214,7 +214,7 @@ reservas_data = [
         "tarifa": "$150"
     },
     {
-        "reserva_id": "RS3",
+        "_id": "RS3",
         "huesped_id": ["G3"],
         "habitacion_id": "R5",
         "codigo_reserva": "C3",
@@ -223,7 +223,7 @@ reservas_data = [
         "tarifa": "$180"
     },
     {
-        "reserva_id": "RS4",
+        "_id": "RS4",
         "huesped_id": ["G4"],
         "habitacion_id": "R2",
         "codigo_reserva": "C4",
@@ -232,7 +232,7 @@ reservas_data = [
         "tarifa": "$220"
     },
     {
-        "reserva_id": "RS5",
+        "_id": "RS5",
         "huesped_id": ["G5"],
         "habitacion_id": "R4",
         "codigo_reserva": "C5",

@@ -9,7 +9,19 @@ def manage_guests():
     apellido = st.text_input("Apellido")
     telefonos = st.text_input("Teléfonos (separados por coma)")
     emails = st.text_input("Correos Electrónicos (separados por coma)")
-    direccion = st.text_input("Dirección")
+    direccion_calle = st.text_input("Calle")
+    direccion_numero = st.text_input("Número")
+    direccion_codigo_postal = st.text_input("Código Postal")
+    direccion_provincia = st.text_input("Provincia")
+    direccion_pais = st.text_input("País")
+    
+    direccion = {
+    "calle": direccion_calle,
+    "número": direccion_numero,
+    "código_postal": direccion_codigo_postal,
+    "provincia": direccion_provincia,
+    "país": direccion_pais
+}
 
     if st.button("Agregar Huésped"):
         telefonos_list = telefonos.split(",")
