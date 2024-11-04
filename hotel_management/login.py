@@ -1,4 +1,5 @@
 import streamlit as st
+from app import main_app
 from main import login
 
 
@@ -11,6 +12,6 @@ def login_screen():
         if login(username, password):
             st.session_state["authenticated"] = username
             st.success("Inicio de sesión exitoso.")
-           
         else:
             st.error("Usuario o contraseña incorrectos.")
+

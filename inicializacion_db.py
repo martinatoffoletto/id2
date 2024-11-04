@@ -253,6 +253,9 @@ usuarios = [
 # Insertar documentos
 db.users.insert_many(usuarios)
 
+# Indice de reservas para que el codigo de reserva sea unico
+db.reservas.create_index([("codigo_reserva", 1)], unique=True)
+
 
 # Verificar la inserción de datos
 print("Datos insertados correctamente en las colecciones de MongoDB.")

@@ -2,8 +2,6 @@ import streamlit as st
 from main import agregar_poi, modificar_poi, eliminar_poi, obtener_hoteles_por_poi, obtener_pois, encontrar_poi_cerca_hotel, obtener_hoteles
 
 def manage_poi():
-    st.title("Gestión de Puntos de Interés")
-
     # Tab options for creating/modifying/deleting POIs and searching hotels by POI
     tabs = st.tabs(["Crear/Modificar/Eliminar", "Buscar Hoteles por Punto de Interés", "Buscar Punto de Interés por Hotel"])
 

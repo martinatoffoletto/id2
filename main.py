@@ -128,17 +128,25 @@ def obtener_huespedes():
 
 ################ RESERVAS ################
 #  ALTA Y LISTA TODOS --> 2
+import random
+import string
+def generar_codigo_reserva():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
-def agregar_reserva( huesped_id, habitacion_id, codigo_reserva, fecha_inicio, fecha_salida, tarifa):
-    db.reservas.insert_one({
-        "huesped_id": huesped_id, # es una lista de huespedes
-        "habitacion_id": habitacion_id,
-        "codigo_reserva": codigo_reserva,
-        "fecha_inicio": fecha_inicio,
-        "fecha_salida": fecha_salida,
-        "tarifa": tarifa
-    })
-
+def agregar_reserva( huesped_id, habitacion_id, fecha_inicio, fecha_salida, tarifa):
+    while True:
+        codigo_reserva = generar_codigo_reserva()
+        if db.reservas.find_one({"codigo_reserva": codigo_reserva}) is None:
+            db.reservas.insert_one({
+                "huesped_id": huesped_id, # es una lista de huespedes
+                "habitacion_id": habitacion_id,
+                "codigo_reserva": codigo_reserva,
+                "fecha_inicio": fecha_inicio,
+                "fecha_salida": fecha_salida,
+                "tarifa": tarifa
+            })
+            return codigo_reserva
+        
 def obtener_reservas():
     return list(db.reservas.find())
 
@@ -205,7 +213,7 @@ def obtener_reservas_por_huesped(huesped_id):
 
 #RESERVAS X FECHA  --> 10 
 def obtener_reservas_por_fecha(hotel_id, fecha):
-    return list(db.reservas.find({"habitacion_id": {"$in": [h["habitacion_id"] for h in db.habitaciones.find({"hotel_id": hotel_id})]}, "fecha_inicio": fecha}))
+    return list(db.reservas.find({"habitacion_id": {"$in": [h["_id"] for h in db.habitaciones.find({"hotel_id": hotel_id})]}, "fecha_inicio": fecha}))
 
 # DETALLES HUESPED --> 11
 def ver_detalles_huesped(huesped_id):

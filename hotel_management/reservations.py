@@ -41,16 +41,14 @@ def manage_reservations():
             st.warning("Este hotel no tiene habitaciones disponibles.")
             return
 
-        
-        codigo_reserva = st.text_input("Código de Reserva")
 
         tarifa = st.number_input("Tarifa", min_value=0.0)
         
 
 
         if st.button("Agregar Reserva"):
-            agregar_reserva( huesped_id, habitacion_id, codigo_reserva, fecha_inicio_str, fecha_salida_str, tarifa)
-            st.success("Reserva agregada exitosamente")
+            codigo_reserva = agregar_reserva( [huesped_id], habitacion_id, fecha_inicio_str, fecha_salida_str, tarifa)
+            st.success("Reserva agregada exitosamente con codigo: " + codigo_reserva)
     with tab2:
         cr=st.text_input("Ingrese Código de Reserva")
         if cr:
@@ -66,11 +64,11 @@ def manage_reservations():
     with tab4: 
         hoteles = obtener_hoteles()
         hoteles_opciones = {hotel["nombre"]: hotel["_id"] for hotel in hoteles}
-        hotel_seleccionado_nombre = st.selectbox("Selecciona el Hotel", list(hoteles_opciones.items()))
-        hotel_id = hotel_seleccionado_nombre[1]
+        hotel_seleccionado_nombre = st.selectbox("Selecciona el Hotel", list(hoteles_opciones.keys()), key="Seleccion-reserva-fecha")
+        hotel_id = hoteles_opciones[hotel_seleccionado_nombre]
         fecha_inicio2 = st.date_input("Fecha de reserva")
-        fecha_inicio_str = fecha_inicio2.strftime("%Y-%m-%d")
-        #st.dataframe(obtener_reservas_por_fecha(hotel_id,"")) --> arreglar funcion
+        fecha_inicio_str_2 = fecha_inicio2.strftime("%Y-%m-%d")
+        st.dataframe(obtener_reservas_por_fecha(hotel_id,fecha_inicio_str_2))
         
     with tab5: 
         # Mostrar lista de reservas
