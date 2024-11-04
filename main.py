@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import redis
-import streamlit as st
+import random
+import string
 
 #Conexion a redis
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
@@ -128,8 +129,7 @@ def obtener_huespedes():
 
 ################ RESERVAS ################
 #  ALTA Y LISTA TODOS --> 2
-import random
-import string
+
 def generar_codigo_reserva():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
