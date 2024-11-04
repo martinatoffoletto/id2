@@ -243,6 +243,7 @@ reservas_data = [
 ]
 
 db.reservas.insert_many(reservas_data)
+
 usuarios = [
     {"user": "user1", "password": "password123"},
     {"user": "user2", "password": "password456"},

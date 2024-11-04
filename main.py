@@ -136,10 +136,10 @@ def obtener_reservas_por_fecha(hotel_id, fecha):
     return list(db.reservas.find({"habitacion_id": {"$in": [h["habitacion_id"] for h in db.habitaciones.find({"hotel_id": hotel_id})]}, "fecha_inicio": fecha}))
 
 def ver_detalles_huesped(huesped_id):
-<<<<<<< HEAD
-    return db.huespedes.find_one({"huesped_id": huesped_id})
+    return db.huespedes.find_one({"_id": huesped_id})
 
-#Login
+
+#Inicio session
 
 def authenticate_user(username, password):
     user = db.users.find_one({"user": username})
@@ -180,6 +180,4 @@ def verificar_conexion_redis():
         print(f"Error de conexión a Redis: {e}")
         return False
 
-=======
-    return db.huespedes.find_one({"_id": huesped_id})
->>>>>>> a4e39086082ca22fb0d09a2a23c50a4a2017a606
+
