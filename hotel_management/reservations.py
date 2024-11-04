@@ -59,7 +59,7 @@ def manage_reservations():
         huespedes_opciones = {f"{huesped['nombre']} {huesped['apellido']}": huesped["_id"] for huesped in huespedes}
         huesped_seleccionado_id = st.selectbox("Selecciona el Huésped", list(huespedes_opciones.items()))
         huesped_id = huesped_seleccionado_id[1]
-        st.dataframe(obtener_reservas_por_huesped(huesped_id))
+        st.json(obtener_reservas_por_huesped(huesped_id))
     
     with tab4: 
         hoteles = obtener_hoteles()
@@ -74,4 +74,4 @@ def manage_reservations():
         # Mostrar lista de reservas
         st.subheader("Lista de Reservas")
         reservas = obtener_reservas()
-        st.dataframe(reservas)
+        st.json(reservas)

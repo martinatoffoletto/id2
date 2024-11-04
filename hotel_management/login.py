@@ -1,5 +1,4 @@
 import streamlit as st
-from app import main_app
 from main import login
 
 

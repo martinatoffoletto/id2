@@ -244,21 +244,3 @@ def logout(username):
     redis_client.delete(username)
 
 
-def verificar_conexion_redis():
-    try:
-        # Prueba de conexión: guardar un valor temporal
-        redis_client.set("test_connection", "success", ex=5)
-        # Recuperar el valor para confirmar
-        result = redis_client.get("test_connection")
-        
-        if result == "success":
-            print("Conexión a Redis exitosa.")
-            return True
-        else:
-            print("Error en la prueba de conexión a Redis.")
-            return False
-    except redis.ConnectionError as e:
-        print(f"Error de conexión a Redis: {e}")
-        return False
-
-

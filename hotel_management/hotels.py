@@ -111,5 +111,4 @@ def manage_hotels():
     with tab5:
         st.subheader("Lista de Hoteles")
         hoteles = obtener_hoteles()
-        st.dataframe(hoteles)
-
+        st.json(hoteles)
