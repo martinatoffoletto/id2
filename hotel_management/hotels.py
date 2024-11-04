@@ -75,11 +75,11 @@ def manage_hotels():
                 "email": nuevo_email,
                 "puntos_de_interés": [{"nombre": nombre} for nombre in nuevos_pois.split(",")]
             }
-            modificar_hotel(hotel_seleccionado["hotel_id"], updates)
+            modificar_hotel(hotel_seleccionado["_id"], updates)
             st.success("Hotel modificado exitosamente")
 
         # Botón para eliminar hotel
         if st.button("Eliminar Hotel"):
-            eliminar_hotel(hotel_seleccionado["hotel_id"])
+            eliminar_hotel(hotel_seleccionado["_id"])
             st.success("Hotel eliminado exitosamente")
 
