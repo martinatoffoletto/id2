@@ -1,11 +1,11 @@
 import streamlit as st
-from main import agregar_poi, modificar_poi, eliminar_poi, obtener_hoteles_por_poi, obtener_pois
+from main import agregar_poi, modificar_poi, eliminar_poi, obtener_hoteles_por_poi, obtener_pois, encontrar_poi_cerca_hotel, obtener_hoteles
 
 def manage_poi():
     st.title("Gestión de Puntos de Interés")
 
     # Tab options for creating/modifying/deleting POIs and searching hotels by POI
-    tabs = st.tabs(["Crear/Modificar/Eliminar", "Buscar Hoteles por Punto de Interés"])
+    tabs = st.tabs(["Crear/Modificar/Eliminar", "Buscar Hoteles por Punto de Interés", "Buscar Punto de Interés por Hotel"])
 
     # Tab 1: Create/Modify/Delete POIs
     with tabs[0]:
@@ -73,3 +73,12 @@ def manage_poi():
                         st.write("---")
                 else:
                     st.info("No se encontraron hoteles asociados a este punto de interés.")
+    with tabs[2]:
+        st.subheader("Ver Detalles de Hotel")
+        hoteles = obtener_hoteles()
+        hotel_seleccionado = st.selectbox("Seleccione un hotel para ver detalles", hoteles, format_func=lambda h: h["nombre"], key="selectbox_ver_detalles")
+
+        if hotel_seleccionado:
+            res= encontrar_poi_cerca_hotel(hotel_seleccionado["_id"])
+            st.write("Puntos de Interes:")
+            st.dataframe(res)

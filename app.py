@@ -14,7 +14,7 @@ if st.session_state["authenticated"]:
     if is_authenticated(st.session_state["authenticated"]):
         st.title("Hotel Management System")
 
-        menu = ["Hoteles", "Habitaciones", "Huéspedes", "Reservas"]
+        menu = ["Hoteles", "Habitaciones", "Huéspedes", "Reservas","Puntos de Interes"]
         choice = st.sidebar.selectbox("Selecciona una sección", menu)
 
         if choice == "Puntos de Interes":    
@@ -27,6 +27,8 @@ if st.session_state["authenticated"]:
             guests.manage_guests()  
         elif choice == "Reservas":
             reservations.manage_reservations() 
+        elif choice=="Puntos de Interes":
+            poi.manage_poi()
         
         if st.sidebar.button("Cerrar Sesión"):
             logout(st.session_state["authenticated"])

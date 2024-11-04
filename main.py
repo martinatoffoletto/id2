@@ -9,6 +9,13 @@ redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_respo
 client = MongoClient("mongodb://localhost:27017/")
 db = client["hotel_management"]
 
+
+
+
+###### POI ##########
+
+# ALTA BAJA MODIFICACION Y LISTAR TODOS  --> 1
+
 def obtener_pois():
     return list(db.poi.find())
 
@@ -37,6 +44,7 @@ def eliminar_poi(id):
 def obtener_hoteles_por_poi(id):
     hoteles = db.hoteles.find({"puntos_de_interés": id})
     return list(hoteles)
+
 
 
 ############# HOTELES ################
@@ -137,9 +145,6 @@ def obtener_reservas():
 
 ############ FUNCIONES #################
 
-#HOTELES CERCA DE POI  --> 3 
-def buscar_hoteles_cerca_poi(poi):
-    return list(db.hoteles.find({"puntos_de_interés": poi}))
 
 #INFO HOTEL  --> 4
 def obtener_info_hotel(hotel_id):  
@@ -149,7 +154,15 @@ def obtener_info_hotel(hotel_id):
 def encontrar_poi_cerca_hotel(hotel_id):
     hotel = db.hoteles.find_one({"_id": hotel_id})
     if hotel:
-        return hotel["puntos_de_interés"]
+        poi_ids = hotel.get("puntos_de_interés", [])
+        
+        # Buscar los POIs en la colección de POI
+        pois = db.poi.find({"_id": {"$in": poi_ids}})
+        
+        # Convertir los resultados a una lista
+        lista_pois = list(pois)
+        
+        return lista_pois
 
 #BUSCAR HAB DISPONIBLES X HOTEL Y FECHA INCIO Y FIN  --> 6
 def buscar_habitacion_disponible(hotel_id, fecha_inicio, fecha_salida):
@@ -169,9 +182,18 @@ def buscar_habitacion_disponible(hotel_id, fecha_inicio, fecha_salida):
     return habitaciones_disponibles
 
 #AMENITIES X HABITACIO  --> 7
-def obtener_amenities_habitacion(habitacion_id):
-    habitacion = db.habitaciones.find_one({"_id": habitacion_id})
-    return habitacion["amenities"] if habitacion else None
+def obtener_amenities_tipo_habitacion(tipo_habitacion):
+    habitaciones = db.habitaciones.find({"tipo":tipo_habitacion })
+    amenities_set = set()
+    for habitacion in habitaciones:
+        amenities = habitacion.get("amenities", [])
+        amenities_set.update(amenities)  # Agregar amenities al conjunto
+    lista_amenities = list(amenities_set)
+    return lista_amenities
+
+def obtener_tipos_habitacion():
+    tipos_habitacion = db.habitaciones.distinct("tipo")
+    return tipos_habitacion
 
 #RESERVA X CODIGO  --> 8
 def obtener_reserva_por_codigo(codigo_reserva):

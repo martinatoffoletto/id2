@@ -54,6 +54,7 @@ def manage_hotels():
             agregar_hotel(nombre, direccion, telefonos_list, email, puntos_de_interes_list)
             st.success("Hotel agregado exitosamente")
             st.session_state["puntos_de_interes"] = []  # Limpiar los puntos de interés
+            
 
     # Tab para modificar hotel
     with tab2:
@@ -63,7 +64,7 @@ def manage_hotels():
 
         if hotel_seleccionado:
             st.write("Datos actuales del hotel:")
-            st.json(hotel_seleccionado)
+            st.dataframe(hotel_seleccionado)
 
             nuevo_nombre = st.text_input("Nuevo Nombre del Hotel", value=hotel_seleccionado["nombre"])
             nueva_direccion = st.text_input("Nueva Dirección", value=hotel_seleccionado["dirección"])
@@ -90,7 +91,7 @@ def manage_hotels():
 
         if hotel_seleccionado:
             st.write("¿Está seguro de que desea eliminar el siguiente hotel?")
-            st.json(hotel_seleccionado)
+            st.dataframe(hotel_seleccionado)
 
             if st.button("Eliminar Hotel"):
                 eliminar_hotel(hotel_seleccionado["_id"])
@@ -104,12 +105,11 @@ def manage_hotels():
 
         if hotel_seleccionado:
             st.write("Detalles del hotel seleccionado:")
-            st.json(hotel_seleccionado)
+            st.dataframe(hotel_seleccionado)
             
     # Tab para ver lista de hoteles
     with tab5:
         st.subheader("Lista de Hoteles")
         hoteles = obtener_hoteles()
-        for hotel in hoteles:
-            st.write(hotel)
+        st.dataframe(hoteles)
 
