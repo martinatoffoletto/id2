@@ -20,7 +20,7 @@ hoteles_data = [
         "habitaciones": ["R1", "R2"]
     },
     {
-        "hotel_id": "H2",
+        "_id": "H2",
         "nombre": "Hotel Faena",
         "dirección": "Martha Salotti 445, Puerto Madero",
         "teléfono": ["011 4010-9100"],
@@ -243,6 +243,15 @@ reservas_data = [
 ]
 
 db.reservas.insert_many(reservas_data)
+usuarios = [
+    {"user": "user1", "password": "password123"},
+    {"user": "user2", "password": "password456"},
+    {"user": "user3", "password": "password789"}
+]
+
+# Insertar documentos
+db.users.insert_many(usuarios)
+
 
 # Verificar la inserción de datos
 print("Datos insertados correctamente en las colecciones de MongoDB.")
