@@ -4,6 +4,25 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
 db = client['hotel_management']
 
+
+puntos_de_interes = [
+    {"_id": 0, "nombre": "Museo Nacional de Bellas Artes", "detalles": "Uno de los museos de arte más importantes de Argentina, alberga una gran colección de arte argentino e internacional."},
+    {"_id": 1, "nombre": "Cementerio de la Recoleta", "detalles": "Lugar de descanso de muchas figuras históricas y culturales de Argentina, famoso por su arquitectura de mausoleos y esculturas."},
+    {"_id": 2, "nombre": "Teatro Colón", "detalles": "Uno de los teatros de ópera más prestigiosos del mundo, reconocido por su acústica y su impresionante arquitectura."},
+    {"_id": 3, "nombre": "Puente de la Mujer", "detalles": "Un icónico puente peatonal en Puerto Madero diseñado por Santiago Calatrava, simboliza la modernidad de la ciudad."},
+    {"_id": 4, "nombre": "Reserva Ecológica Costanera Sur", "detalles": "Un pulmón verde a orillas del río, ideal para caminatas y observar la naturaleza en medio de la ciudad."},
+    {"_id": 5, "nombre": "Centro Histórico", "detalles": "Área que incluye edificios y plazas históricas como Plaza de Mayo, que cuenta con una rica historia y arquitectura colonial."},
+    {"_id": 6, "nombre": "Obelisco", "detalles": "Monumento icónico de Buenos Aires ubicado en la Avenida 9 de Julio, símbolo de la ciudad y punto de encuentro popular."},
+    {"_id": 7, "nombre": "Plaza de Mayo", "detalles": "Centro político y cultural de Buenos Aires, rodeado de edificios emblemáticos como la Casa Rosada y la Catedral Metropolitana."},
+    {"_id": 8, "nombre": "Museo de Arte Latinoamericano de Buenos Aires (MALBA)", "detalles": "Museo que alberga una destacada colección de arte latinoamericano contemporáneo y moderno."},
+    {"_id": 9, "nombre": "Jardín Japonés", "detalles": "Un hermoso jardín de estilo japonés en el barrio de Palermo, ideal para relajarse y disfrutar de la cultura japonesa."},
+    {"_id": 10, "nombre": "El Rosedal", "detalles": "Parque en Palermo con una gran variedad de rosas, senderos y un lago, es uno de los lugares más hermosos de la ciudad."},
+    {"_id": 11, "nombre": "Casa Rosada", "detalles": "Sede del Poder Ejecutivo Nacional, destaca por su color rosado y su relevancia en la historia de Argentina."},
+    {"_id": 12, "nombre": "Catedral Metropolitana", "detalles": "Principal iglesia católica de Buenos Aires, alberga los restos del General San Martín, uno de los héroes de la independencia."},
+    {"_id": 13, "nombre": "Barrio San Telmo", "detalles": "Uno de los barrios más antiguos de la ciudad, conocido por su ambiente bohemio, ferias de antigüedades y tango."}
+]
+
+
 # Insertar datos en la colección Hotelescls
 hoteles_data = [
     {
@@ -12,11 +31,7 @@ hoteles_data = [
         "dirección": "Avenida Alvear 1361, Recoleta",
         "teléfono": ["011 4808-2100"],
         "email": "info@alvear.com.ar",
-        "puntos_de_interés": [
-            {"nombre": "Museo Nacional de Bellas Artes", "valor": 10},
-            {"nombre": "Cementerio de la Recoleta", "valor": 0},
-            {"nombre": "Teatro Colón", "valor": 15}
-        ],
+        "puntos_de_interés": [0, 1, 2],  # Museo Nacional de Bellas Artes, Cementerio de la Recoleta, Teatro Colón
         "habitaciones": ["R1", "R2"]
     },
     {
@@ -25,11 +40,7 @@ hoteles_data = [
         "dirección": "Martha Salotti 445, Puerto Madero",
         "teléfono": ["011 4010-9100"],
         "email": "reservas@faenahotels.com",
-        "puntos_de_interés": [
-            {"nombre": "Puente de la Mujer", "valor": 0},
-            {"nombre": "Reserva Ecológica Costanera Sur", "valor": 0},
-            {"nombre": "Centro Histórico", "valor": 5}
-        ],
+        "puntos_de_interés": [3, 4, 5],  # Puente de la Mujer, Reserva Ecológica Costanera Sur, Centro Histórico
         "habitaciones": ["R3", "R4"]
     },
     {
@@ -38,11 +49,7 @@ hoteles_data = [
         "dirección": "Avenida Leandro N. Alem 1200, Microcentro",
         "teléfono": ["011 4318-9000"],
         "email": "info.buenosaires@sheraton.com",
-        "puntos_de_interés": [
-            {"nombre": "Obelisco", "valor": 0},
-            {"nombre": "Teatro Colón", "valor": 15},
-            {"nombre": "Plaza de Mayo", "valor": 0}
-        ],
+        "puntos_de_interés": [6, 2, 7],  # Obelisco, Teatro Colón, Plaza de Mayo
         "habitaciones": ["R5", "R6"]
     },
     {
@@ -51,11 +58,7 @@ hoteles_data = [
         "dirección": "Av. Alvear 1661, Recoleta",
         "teléfono": ["011 5171-1234"],
         "email": "reservas.buenosaires@hyatt.com",
-        "puntos_de_interés": [
-            {"nombre": "Museo de Arte Latinoamericano de Buenos Aires", "valor": 12},
-            {"nombre": "Jardín Japonés", "valor": 10},
-            {"nombre": "El Rosedal", "valor": 0}
-        ],
+        "puntos_de_interés": [8, 9, 10],  # MALBA, Jardín Japonés, El Rosedal
         "habitaciones": ["R7", "R8"]
     },
     {
@@ -64,15 +67,12 @@ hoteles_data = [
         "dirección": "Moreno 809, Monserrat",
         "teléfono": ["011 5279-9200"],
         "email": "info.buenosaires@ihg.com",
-        "puntos_de_interés": [
-            {"nombre": "Casa Rosada", "valor": 0},
-            {"nombre": "Catedral Metropolitana", "valor": 0},
-            {"nombre": "Barrio San Telmo", "valor": 8}
-        ],
+        "puntos_de_interés": [11, 12, 13],  # Casa Rosada, Catedral Metropolitana, Barrio San Telmo
         "habitaciones": ["R9", "R10"]
     }
-
 ]
+
+db.poi.insert_many(puntos_de_interes)
 
 db.hoteles.insert_many(hoteles_data)
 

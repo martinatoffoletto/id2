@@ -4,6 +4,34 @@ from pymongo import MongoClient
 client = MongoClient("mongodb://localhost:27017/")
 db = client["hotel_management"]
 
+def obtener_pois():
+    return list(db.poi.find())
+
+
+def agregar_poi(nombre,detalles):
+    nuevo_poi = {
+        "nombre": nombre,
+        "detalles": detalles
+    }
+    return db.poi.insert_one(nuevo_poi).inserted_id
+    
+def modificar_poi(id, nombre,detalles):
+    db.poi.update_one(
+        {"_id": id},
+        {"$set": {"nombre": nombre, "detalles": detalles}}
+    )
+    
+def eliminar_poi(id):
+    db.poi.delete_one({"_id": id})
+    
+    db.hoteles.update_many(
+        {"puntos_de_interés": id},
+        {"$pull": {"puntos_de_interés": id}}
+    )
+    
+def obtener_hoteles_por_poi(id):
+    hoteles = db.hoteles.find({"puntos_de_interés": id})
+    return list(hoteles)
 
 def agregar_hotel(nombre, direccion, telefonos, email, puntos_de_interes):
     db.hoteles.insert_one({
