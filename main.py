@@ -1,4 +1,9 @@
 from pymongo import MongoClient
+import redis
+import streamlit as st
+
+#Conexion a redis
+redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
 # Conexión a MongoDB
 client = MongoClient("mongodb://localhost:27017/")
@@ -32,6 +37,8 @@ def eliminar_poi(id):
 def obtener_hoteles_por_poi(id):
     hoteles = db.hoteles.find({"puntos_de_interés": id})
     return list(hoteles)
+
+
 
 def agregar_hotel(nombre, direccion, telefonos, email, puntos_de_interes):
     db.hoteles.insert_one({
@@ -160,3 +167,47 @@ def obtener_reservas_por_fecha(hotel_id, fecha):
 
 def ver_detalles_huesped(huesped_id):
     return db.huespedes.find_one({"_id": huesped_id})
+
+
+#Inicio session
+
+def authenticate_user(username, password):
+    user = db.users.find_one({"user": username})
+    if user and user["password"] == password:
+        return True
+    return False
+
+# Función para iniciar sesión
+def login(username, password):
+    if authenticate_user(username, password):
+        redis_client.setex(username, 3600, "logged_in")  # Sesión expira en 1 hora
+        return True
+    return False
+
+# Función para verificar si el usuario está autenticado
+def is_authenticated(username):
+    return redis_client.get(username) == "logged_in"
+
+# Función para cerrar sesión
+def logout(username):
+    redis_client.delete(username)
+
+
+def verificar_conexion_redis():
+    try:
+        # Prueba de conexión: guardar un valor temporal
+        redis_client.set("test_connection", "success", ex=5)
+        # Recuperar el valor para confirmar
+        result = redis_client.get("test_connection")
+        
+        if result == "success":
+            print("Conexión a Redis exitosa.")
+            return True
+        else:
+            print("Error en la prueba de conexión a Redis.")
+            return False
+    except redis.ConnectionError as e:
+        print(f"Error de conexión a Redis: {e}")
+        return False
+
+
