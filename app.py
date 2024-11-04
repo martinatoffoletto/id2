@@ -39,5 +39,4 @@ if st.session_state["authenticated"]:
         st.session_state["authenticated"] = None
         st.rerun()  
 else:
-    # Mostrar pantalla de inicio de sesión si no está autenticado
     login.login_screen()
